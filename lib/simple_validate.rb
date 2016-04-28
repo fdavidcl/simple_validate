@@ -25,6 +25,10 @@ module SimpleValidate
 
   module ClassMethods
     def validates_format_of(*args)
+      options = args.last.is_a?(Hash) ? args.pop : {}
+      args.each do |attr|
+        validations << FormatValidator.new(attr, options)
+      end
     end
 
     def validates_presence_of(*args)
@@ -59,6 +63,21 @@ module SimpleValidate
 
     def valid?(instance)
       !instance.send(attribute).nil?
+    end
+  end
+
+  class FormatValidator
+    attr_reader :message
+    attr_accessor :attribute
+
+    def initialize(attribute, options)
+      @regex     = options[:with]
+      @message   = options[:message] || "is incorrect format"
+      @attribute = attribute
+    end
+
+    def valid?(instance)
+      !!(instance.send(attribute) =~ @regex)
     end
   end
 
