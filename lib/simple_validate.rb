@@ -2,25 +2,19 @@ require "simple_validate/version"
 
 module SimpleValidate
   def self.included(klass)
-    klass.class_eval do
-      extend ClassMethods
-      include InstanceMethods
-    end
+    klass.extend ClassMethods
   end
 
-  module InstanceMethods
-    def valid?
-      self.class.validate(self)
-    end
+  def valid?
+    self.class.validate(self)
+  end
 
-    def invalid?
-      !valid?
-    end
+  def invalid?
+    !valid?
+  end
 
-    def errors
-      @errors ||= Errors.new
-    end
-
+  def errors
+    @errors ||= Errors.new
   end
 
   module ClassMethods
