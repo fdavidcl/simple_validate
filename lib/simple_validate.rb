@@ -1,4 +1,5 @@
 require "simple_validate/version"
+require "simple_validate/core_ext/array"
 
 module SimpleValidate
   def self.included(klass)
@@ -19,16 +20,16 @@ module SimpleValidate
 
   module ClassMethods
     def validates_format_of(*args)
-      options = args.last.is_a?(Hash) ? args.pop : {}
+      options = args.extract_options!
       args.each do |attr|
         validations << FormatValidator.new(attr, options)
       end
     end
 
     def validates_presence_of(*args)
-      options = args.last.is_a?(Hash) ? args.pop : {}
+      options = args.extract_options!
       args.each do |attr|
-        validations << PresenceValidator.new(attr, options[:message] || "can't be empty")
+        validations << PresenceValidator.new(attr, options)
       end
     end
 
@@ -50,8 +51,8 @@ module SimpleValidate
     attr_reader :message
     attr_accessor :attribute
 
-    def initialize(attribute, message)
-      @message = message
+    def initialize(attribute, options)
+      @message = options[:message] || "can't be empty"
       @attribute = attribute
     end
 
