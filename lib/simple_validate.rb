@@ -20,16 +20,17 @@ module SimpleValidate
 
   module ClassMethods
     def validates_format_of(*args)
-      options = args.extract_options!
-      args.each do |attr|
-        validations << FormatValidator.new(attr, options)
-      end
+      add_validations(args, FormatValidator)
     end
 
     def validates_presence_of(*args)
+      add_validations(args, PresenceValidator)
+    end
+
+    def add_validations(args, klass)
       options = args.extract_options!
       args.each do |attr|
-        validations << PresenceValidator.new(attr, options)
+        validations << klass.new(attr, options)
       end
     end
 
