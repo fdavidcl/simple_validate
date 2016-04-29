@@ -1,4 +1,8 @@
 require "simple_validate/version"
+require "simple_validate/validates_presence_of"
+require "simple_validate/validates_format_of"
+require "simple_validate/validates_numericality_of"
+require "simple_validate/errors"
 require 'active_support/all'
 
 module SimpleValidate
@@ -18,51 +22,7 @@ module SimpleValidate
     @errors ||= Errors.new
   end
 
-  class ValidatesPresenceOf
-    attr_reader :message
-    attr_accessor :attribute
-
-    def initialize(attribute, options)
-      @message = options[:message] || "can't be empty"
-      @attribute = attribute
-    end
-
-    def valid?(instance)
-      !instance.send(attribute).nil?
-    end
-  end
-
-  class ValidatesNumericalityOf
-    attr_reader :message
-    attr_accessor :attribute
-
-    def initialize(attribute, options)
-      @message = options[:message] || "must be a number"
-      @attribute = attribute
-    end
-
-    def valid?(instance)
-      instance.send(attribute).is_a?(Numeric)
-    end
-  end
-
-  class ValidatesFormatOf
-    attr_reader :message
-    attr_accessor :attribute
-
-    def initialize(attribute, options)
-      @regex     = options[:with]
-      @message   = options[:message] || "is incorrect format"
-      @attribute = attribute
-    end
-
-    def valid?(instance)
-      !!(instance.send(attribute) =~ @regex)
-    end
-  end
-
   module ClassMethods
-
     def method_missing(method, *args, &block)
       if "#{method}" =~ /(validates_(format_of|presence_of|numericality_of))/
         add_validations(args, const_get($1.classify))
@@ -93,24 +53,6 @@ module SimpleValidate
         end
       end
       instance.errors.empty?
-    end
-  end
-
-  class Errors
-    def initialize
-      @errors = {}
-    end
-
-    def add(attribute, message)
-      @errors[attribute] = message
-    end
-
-    def on(key)
-      @errors.fetch(key)
-    end
-
-    def empty?
-      @errors.empty?
     end
   end
 end
