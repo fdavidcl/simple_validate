@@ -1,5 +1,4 @@
 require "simple_validate/version"
-require "simple_validate/core_ext/array"
 require 'active_support/all'
 
 module SimpleValidate
