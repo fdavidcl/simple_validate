@@ -33,6 +33,20 @@ module SimpleValidate
     end
   end
 
+  class ValidatesNumericalityOf
+    attr_reader :message
+    attr_accessor :attribute
+
+    def initialize(attribute, options)
+      @message = options[:message] || "must be a number"
+      @attribute = attribute
+    end
+
+    def valid?(instance)
+      instance.send(attribute).is_a?(Numeric)
+    end
+  end
+
   class ValidatesFormatOf
     attr_reader :message
     attr_accessor :attribute
@@ -51,7 +65,7 @@ module SimpleValidate
   module ClassMethods
 
     def method_missing(method, *args, &block)
-      if "#{method}" =~ /(validates_(format_of|presence_of))/
+      if "#{method}" =~ /(validates_(format_of|presence_of|numericality_of))/
         add_validations(args, const_get($1.classify))
       else
         super
@@ -59,7 +73,7 @@ module SimpleValidate
     end
 
     def respond_to_missing?(method, include_private = false)
-      "#{method}" =~ /validates_(format_of|presence_of)/ || super
+      "#{method}" =~ /validates_(format_of|presence_of|numericality_of)/ || super
     end
 
     def add_validations(args, klass)
