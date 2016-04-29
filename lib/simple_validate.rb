@@ -1,5 +1,6 @@
 require "simple_validate/version"
 require "simple_validate/core_ext/array"
+require 'active_support/all'
 
 module SimpleValidate
   def self.included(klass)
@@ -18,13 +19,47 @@ module SimpleValidate
     @errors ||= Errors.new
   end
 
-  module ClassMethods
-    def validates_format_of(*args)
-      add_validations(args, FormatValidator)
+  class ValidatesPresenceOf
+    attr_reader :message
+    attr_accessor :attribute
+
+    def initialize(attribute, options)
+      @message = options[:message] || "can't be empty"
+      @attribute = attribute
     end
 
-    def validates_presence_of(*args)
-      add_validations(args, PresenceValidator)
+    def valid?(instance)
+      !instance.send(attribute).nil?
+    end
+  end
+
+  class ValidatesFormatOf
+    attr_reader :message
+    attr_accessor :attribute
+
+    def initialize(attribute, options)
+      @regex     = options[:with]
+      @message   = options[:message] || "is incorrect format"
+      @attribute = attribute
+    end
+
+    def valid?(instance)
+      !!(instance.send(attribute) =~ @regex)
+    end
+  end
+
+  module ClassMethods
+
+    def method_missing(method, *args, &block)
+      if "#{method}" =~ /(validates_(format_of|presence_of))/
+        add_validations(args, const_get($1.classify))
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(method, include_private = false)
+      "#{method}" =~ /validates_(format_of|presence_of)/ || super
     end
 
     def add_validations(args, klass)
@@ -45,35 +80,6 @@ module SimpleValidate
         end
       end
       instance.errors.empty?
-    end
-  end
-
-  class PresenceValidator
-    attr_reader :message
-    attr_accessor :attribute
-
-    def initialize(attribute, options)
-      @message = options[:message] || "can't be empty"
-      @attribute = attribute
-    end
-
-    def valid?(instance)
-      !instance.send(attribute).nil?
-    end
-  end
-
-  class FormatValidator
-    attr_reader :message
-    attr_accessor :attribute
-
-    def initialize(attribute, options)
-      @regex     = options[:with]
-      @message   = options[:message] || "is incorrect format"
-      @attribute = attribute
-    end
-
-    def valid?(instance)
-      !!(instance.send(attribute) =~ @regex)
     end
   end
 
