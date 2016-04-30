@@ -5,7 +5,7 @@ module SimpleValidate
 
     def initialize(attribute, options)
       @regex     = options[:with]
-      @message   = options[:message] || "is incorrect format"
+      @message   = options[:message] || 'is incorrect format'
       @attribute = attribute
     end
 

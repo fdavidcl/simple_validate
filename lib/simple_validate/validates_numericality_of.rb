@@ -4,7 +4,7 @@ module SimpleValidate
     attr_accessor :attribute
 
     def initialize(attribute, options)
-      @message = options[:message] || "must be a number"
+      @message = options[:message] || 'must be a number'
       @attribute = attribute
     end
 

@@ -20,7 +20,7 @@ RSpec.describe SimpleValidate do
       expect(@klass.new.invalid?).to be(true)
     end
 
-    it "it will contain errors" do
+    it 'it will contain errors' do
       instance = @klass.new
       instance.valid?
       expect(instance.errors.on(:name)).to eq("can't be empty")
@@ -37,7 +37,7 @@ RSpec.describe SimpleValidate do
       end
     end
 
-    it "#valid? returns false" do
+    it '#valid? returns false' do
       expect(@klass.new.valid?).to be(false)
     end
 
@@ -45,10 +45,10 @@ RSpec.describe SimpleValidate do
       expect(@klass.new.invalid?).to be(true)
     end
 
-    it "it will contain errors" do
+    it 'it will contain errors' do
       instance = @klass.new
       instance.valid?
-      expect(instance.errors.on(:name)).to eq("is incorrect format")
+      expect(instance.errors.on(:name)).to eq('is incorrect format')
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe SimpleValidate do
       end
     end
 
-    it "#valid? returns false" do
+    it '#valid? returns false' do
       expect(@klass.new.valid?).to be(false)
     end
 
@@ -70,10 +70,10 @@ RSpec.describe SimpleValidate do
       expect(@klass.new.invalid?).to be(true)
     end
 
-    it "it will contain errors" do
+    it 'it will contain errors' do
       instance = @klass.new
       instance.valid?
-      expect(instance.errors.on(:age)).to eq("must be a number")
+      expect(instance.errors.on(:age)).to eq('must be a number')
     end
   end
 end

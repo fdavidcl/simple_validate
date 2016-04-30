@@ -1,8 +1,8 @@
-require "simple_validate/version"
-require "simple_validate/validates_presence_of"
-require "simple_validate/validates_format_of"
-require "simple_validate/validates_numericality_of"
-require "simple_validate/errors"
+require 'simple_validate/version'
+require 'simple_validate/validates_presence_of'
+require 'simple_validate/validates_format_of'
+require 'simple_validate/validates_numericality_of'
+require 'simple_validate/errors'
 require 'active_support/all'
 
 module SimpleValidate
