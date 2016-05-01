@@ -21,6 +21,8 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+require 'simple_validate'
+
 class Person
   include SimpleValidate
   attr_accessor :name, :age
