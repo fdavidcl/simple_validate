@@ -21,5 +21,9 @@ module SimpleValidate
     def empty?
       @messages.empty?
     end
+
+    def full_messages
+      @messages.values.flatten.map(&:capitalize)
+    end
   end
 end
