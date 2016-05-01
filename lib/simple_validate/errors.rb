@@ -1,19 +1,25 @@
 module SimpleValidate
   class Errors
+    attr_reader :messages
+
     def initialize
-      @errors = {}
+      @messages = {}
     end
 
     def add(attribute, message)
-      @errors[attribute] = message
+      if @messages.key?(attribute)
+        @messages[attribute] << message
+      else
+        @messages[attribute] = Array(message)
+      end
     end
 
     def on(key)
-      @errors.fetch(key)
+      @messages.fetch(key)
     end
 
     def empty?
-      @errors.empty?
+      @messages.empty?
     end
   end
 end
