@@ -1,12 +1,9 @@
 module SimpleValidate
-  class ValidatesFormatOf
-    attr_reader :message
-    attr_accessor :attribute
+  class ValidatesFormatOf < ValidatesBase
 
     def initialize(attribute, options)
-      @regex     = options[:with]
-      @message   = options[:message] || 'is incorrect format'
-      @attribute = attribute
+      @regex = options[:with]
+      super(attribute, options[:message] || "is incorrect format")
     end
 
     def valid?(instance)

@@ -1,11 +1,8 @@
 module SimpleValidate
-  class ValidatesNumericalityOf
-    attr_reader :message
-    attr_accessor :attribute
+  class ValidatesNumericalityOf < ValidatesBase
 
     def initialize(attribute, options)
-      @message = options[:message] || 'must be a number'
-      @attribute = attribute
+      super(attribute, options[:message] || "must be a number")
     end
 
     def valid?(instance)

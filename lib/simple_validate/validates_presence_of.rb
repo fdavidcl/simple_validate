@@ -1,11 +1,8 @@
 module SimpleValidate
-  class ValidatesPresenceOf
-    attr_reader :message
-    attr_accessor :attribute
+  class ValidatesPresenceOf < ValidatesBase
 
     def initialize(attribute, options)
-      @message = options[:message] || "can't be empty"
-      @attribute = attribute
+      super(attribute, options[:message] || "can't be empty")
     end
 
     def valid?(instance)
