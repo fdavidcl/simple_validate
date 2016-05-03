@@ -20,6 +20,8 @@ Or install it yourself as:
 
 ## Usage
 
+### Example
+
 ```ruby
 require 'simple_validate'
 
@@ -40,6 +42,36 @@ end
  @messages=
   {:age=>["can't be empty", "must be a number"],
    :name=>["can't be empty"]}>
+```
+
+### Presence
+
+* It is possible to pass a different message to any validation.
+
+```ruby
+  validates_presence_of :attribute, message: 'NOT HERE'
+```
+
+### Numericality
+
+```ruby
+  validates_numericality_of :attribute
+```
+
+### Format
+
+```ruby
+  validates_format_of :attribute, with: /.*/
+```
+
+### Length
+
+* Possible length options include: `maximum`, `minimum`, `in`, `is`.
+
+* `maximum`, `minimum` and `is` take a single integer and `in` takes a range.
+
+```ruby
+  validates_length_of :attribute, in: 6..9
 ```
 
 ## Development
