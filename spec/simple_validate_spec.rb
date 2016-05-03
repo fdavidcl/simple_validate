@@ -95,4 +95,32 @@ RSpec.describe SimpleValidate do
       expect(instance.errors.on(:age)).to eq(["can't be empty", 'must be a number'])
     end
   end
+
+  describe 'invalid length - too short' do
+
+    it 'will raise an error for an invalid length option' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+      end
+
+      expect { @klass.class_eval { validates_length_of :name, min: 6 }}.to raise_error(SimpleValidate::ValidatesLengthOf::InvalidLengthOption)
+    end
+
+    it 'will contain array of errors' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+
+        validates_length_of :name, minimum: 6
+      end
+
+      instance = @klass.new
+      instance.name = 'aaa'
+      instance.valid?
+      expect(instance.errors.on(:name)).to eq(["is too short"])
+    end
+  end
 end
