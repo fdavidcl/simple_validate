@@ -44,7 +44,7 @@ module SimpleValidate
       when :maximum
         actual_length <= valid_length ? true : false
       when :in
-        Range.new(valid_length).member?(actual_length) ? true : false
+        valid_length.member?(actual_length) ? true : false
       when :is
         actual_length == valid_length ? true : false
       end
