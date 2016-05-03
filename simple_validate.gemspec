@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Nick Palaniuk']
   spec.email         = ['npalaniuk@gmail.com']
 
-  spec.summary       = %q(Validations for any plain old ruby object)
-  spec.description   = %q(Validations for any ruby object)
+  spec.summary       = 'Validations for any plain old ruby object'
+  spec.description   = 'Validations for any ruby object'
   spec.homepage      = 'https://github.com/nikkypx/simple_validate'
   spec.license       = 'MIT'
 
