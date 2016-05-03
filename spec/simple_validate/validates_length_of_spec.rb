@@ -1,0 +1,50 @@
+require 'spec_helper'
+
+RSpec.describe SimpleValidate do
+  describe 'invalid length' do
+
+    it 'will raise an error for an invalid length option' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+      end
+
+      expect { @klass.class_eval { validates_length_of :name, min: 6 }}.to raise_error(SimpleValidate::ValidatesLengthOf::InvalidLengthOption)
+    end
+  end
+
+  describe 'length is too short' do
+    it 'will have the correct default error message' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+
+        validates_length_of :name, minimum: 6
+      end
+
+      instance = @klass.new
+      instance.name = 'aaa'
+      instance.valid?
+      expect(instance.errors.on(:name)).to eq(["is too short"])
+    end
+  end
+
+  describe 'length is not within range' do
+    it 'will have the correct default error message' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+
+        validates_length_of :name, in: 6..9
+      end
+
+      instance = @klass.new
+      instance.name = 'aaa'
+      instance.valid?
+      expect(instance.errors.on(:name)).to eq(['is not the correct length'])
+    end
+  end
+end
