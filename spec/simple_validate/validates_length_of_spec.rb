@@ -31,6 +31,23 @@ RSpec.describe SimpleValidate do
     end
   end
 
+  describe 'length is too long' do
+    it 'will have the correct default error message' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+
+        validates_length_of :name, maximum: 10
+      end
+
+      instance = @klass.new
+      instance.name = 'a' * 11
+      instance.valid?
+      expect(instance.errors.on(:name)).to eq(["is too long"])
+    end
+  end
+
   describe 'length is not within range' do
     it 'will have the correct default error message' do
       @klass = Class.new
