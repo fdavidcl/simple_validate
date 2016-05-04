@@ -19,10 +19,23 @@ RSpec.describe SimpleValidate do
       expect(@klass.new.invalid?).to be(true)
     end
 
-    it 'it will contain errors' do
+    it 'will contain errors' do
       instance = @klass.new
       instance.valid?
       expect(instance.errors.on(:name)).to eq(["can't be empty"])
+    end
+
+    it 'will show custom error message' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :name
+        validates_presence_of :name, message: 'NOT HERE'
+      end
+
+      instance = @klass.new
+      instance.valid?
+      expect(instance.errors.on(:name)).to eq(['NOT HERE'])
     end
   end
 end

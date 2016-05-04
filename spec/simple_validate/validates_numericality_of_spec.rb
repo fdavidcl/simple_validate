@@ -24,5 +24,18 @@ RSpec.describe SimpleValidate do
       instance.valid?
       expect(instance.errors.on(:age)).to eq(['must be a number'])
     end
+
+    it 'will show custom error message' do
+      @klass = Class.new
+      @klass.class_eval do
+        include SimpleValidate
+        attr_accessor :age
+        validates_numericality_of :age, message: 'NOT HERE'
+      end
+
+      instance = @klass.new
+      instance.valid?
+      expect(instance.errors.on(:age)).to eq(['NOT HERE'])
+    end
   end
 end
