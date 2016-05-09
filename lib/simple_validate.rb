@@ -26,13 +26,8 @@ module SimpleValidate
 
   module ClassMethods
     def method_missing(method, *args, &block)
-      if "#{method}" =~ /(validates_
-                          (format|
-                           presence|
-                           numericality|
-                           length)_of)
-        /x
-        add_validations(args, const_get($1.classify))
+      if respond_to_missing?(method)
+        add_validations(args, const_get("#{method}".classify))
       else
         super
       end
