@@ -1,4 +1,7 @@
+
 # SimpleValidate
+
+[![Build Status](https://travis-ci.org/nikkypx/simple_validate.svg?branch=master)](https://travis-ci.org/nikkypx/simple_validate)
 
 Borrowing ideas from [validatable](https://github.com/jnunemaker/validatable) and Rails validations, this is a library for validations for any ruby object.
 
