@@ -40,13 +40,13 @@ module SimpleValidate
       validator_key, valid_length = @length_validator.entries.first
       case validator_key
       when :minimum
-        actual_length >= valid_length ? true : false
+        actual_length >= valid_length
       when :maximum
-        actual_length <= valid_length ? true : false
+        actual_length <= valid_length
       when :in
-        valid_length.member?(actual_length) ? true : false
+        valid_length.member?(actual_length)
       when :is
-        actual_length == valid_length ? true : false
+        actual_length == valid_length
       end
     end
 
