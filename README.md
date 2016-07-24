@@ -1,4 +1,3 @@
-
 # SimpleValidate
 
 [![Build Status](https://travis-ci.org/nikkypx/simple_validate.svg?branch=master)](https://travis-ci.org/nikkypx/simple_validate)
