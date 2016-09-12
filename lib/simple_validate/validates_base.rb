@@ -1,11 +1,10 @@
 module SimpleValidate
   class ValidatesBase
-    attr_reader :message
-    attr_accessor :attribute
+    attr_accessor :message, :attribute
 
     def initialize(attribute, message)
-      @message   = message
-      @attribute = attribute
+      self.message   = message
+      self.attribute = attribute
     end
   end
 end
